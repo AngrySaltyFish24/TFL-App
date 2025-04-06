@@ -26,13 +26,13 @@ const isValidTubeResponse: TypeGuard = (x) => {
 
 const makeTubeFromStatusResponse = (resp: TubeStatusResponse) => {
   if (isValidTubeResponse(resp)) {
-      const raw_status =resp["lineStatuses"][0]; 
+    const raw_status = resp["lineStatuses"][0];
     return {
       name: resp["name"],
       id: resp["id"],
       status: {
-          description: raw_status["statusSeverityDescription"],
-          reason: raw_status["reason"]
+        description: raw_status["statusSeverityDescription"],
+        reason: raw_status["reason"],
       },
     } as Tube;
   }
@@ -43,31 +43,7 @@ export const useFetchAllTubeData: () => [Tube[], boolean] = () => {
   let tubes: Tube[] = [];
   const [{ data, loading }] = useTFLAPI("/Line/Mode/tube/Status");
   if (data !== undefined) {
-      console.log(data);
     tubes = data.map(makeTubeFromStatusResponse);
   }
   return [tubes, loading];
-};
-
-export const useFetchTubeDataById: (
-  id: string | null,
-) => [null | Tube, boolean] = (id: string | null) => {
-  let [tube, setTube] = useState<null | Tube>(null);
-  const [{ loading }, execute] = useTFLAPI(`/Line/${id}/Status`, {
-    manual: true,
-  });
-
-  const fetch = async () => {
-    const data = await execute();
-    if (data !== undefined) {
-      setTube(makeTubeFromStatusResponse(data.data[0]));
-    }
-  };
-
-  useEffect(() => {
-    if (id !== null) {
-      fetch();
-    }
-  }, [id]);
-  return [tube, loading];
 };

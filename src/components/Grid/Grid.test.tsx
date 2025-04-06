@@ -2,6 +2,8 @@ import React, { act } from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import Grid from "./Grid";
 
+import { makeTestTubeData } from "testing";
+
 import { TFLAxios } from "services";
 import AxiosMockAdapter from "axios-mock-adapter";
 
@@ -66,7 +68,7 @@ afterEach(() => {
 });
 
 const renderApp = async () => {
-  render(<Grid></Grid>);
+  render(<Grid tubeData={makeTestTubeData()}></Grid>);
   await waitFor(() => {
     expect(screen.getByText("Bakerloo"));
   });
@@ -92,16 +94,15 @@ test("All rows are rendered", async () => {
 // });
 
 test("Rows can expand with more information", async () => {
-    await renderApp();
-    const button = screen.queryAllByLabelText("expand row")[0]
-    fireEvent.click(button)
+  await renderApp();
+  const button = screen.queryAllByLabelText("expand row")[0];
+  fireEvent.click(button);
   await waitFor(() => {
     expect(screen.queryByText("Reason")).toBeInTheDocument();
   });
 
-  fireEvent.click(button)
+  fireEvent.click(button);
   await waitFor(() => {
     expect(screen.queryByText("Reason")).not.toBeInTheDocument();
   });
-
-})
+});
