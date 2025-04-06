@@ -1,8 +1,8 @@
 import React, { act } from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import App from "./App";
+import Grid from "./Grid";
 
-import { TFLAxios } from "./services";
+import { TFLAxios }  from "services";
 import AxiosMockAdapter from "axios-mock-adapter";
 
 const mock_data = [
@@ -66,7 +66,7 @@ afterEach(() => {
 });
 
 const renderApp = async () => {
-  render(<App></App>);
+  render(<Grid></Grid>);
   await waitFor(() => {
     expect(screen.getByText("Bakerloo"));
   });
