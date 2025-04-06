@@ -2,7 +2,7 @@ import React, { act } from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import Grid from "./Grid";
 
-import { TFLAxios }  from "services";
+import { TFLAxios } from "services";
 import AxiosMockAdapter from "axios-mock-adapter";
 
 const mock_data = [
@@ -79,14 +79,29 @@ test("All rows are rendered", async () => {
   }
 });
 
-test("Service is updated on click", async () => {
-  await renderApp();
-  expect(screen.queryByText("Bad Service")).not.toBeInTheDocument();
+// test("Service is updated on click", async () => {
+//   await renderApp();
+//   expect(screen.queryByText("Bad Service")).not.toBeInTheDocument();
+//
+//   const row = screen.getByText("Bakerloo");
+//   fireEvent.click(row);
+//
+//   await waitFor(() => {
+//     expect(screen.queryByText("Bad Service")).toBeInTheDocument();
+//   });
+// });
 
-  const row = screen.getByText("Bakerloo");
-  fireEvent.click(row);
-
+test("Rows can expand with more information", async () => {
+    await renderApp();
+    const button = screen.queryAllByLabelText("expand row")[0]
+    fireEvent.click(button)
   await waitFor(() => {
-    expect(screen.queryByText("Bad Service")).toBeInTheDocument();
+    expect(screen.queryByText("Reason")).toBeInTheDocument();
   });
-});
+
+  fireEvent.click(button)
+  await waitFor(() => {
+    expect(screen.queryByText("Reason")).not.toBeInTheDocument();
+  });
+
+})

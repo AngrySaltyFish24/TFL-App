@@ -1,24 +1,18 @@
 import useAxios from "axios-hooks";
 import { useEffect, useState } from "react";
 
-import { useTFLAPI } from "./index";
+import { TypeGuard, Tube } from "types";
 
-export type Tube = {
-  name: string;
-  id: string;
-  status: string;
-};
+import { useTFLAPI } from "./index";
 
 type TubeStatusResponse = {
   name: string;
   id: string;
   lineStatuses: {
     statusSeverityDescription: string;
+    reason: string;
   }[];
 };
-
-type Predicate<T> = (x: T) => boolean;
-type TypeGuard = Predicate<unknown>;
 
 const isValidTubeResponse: TypeGuard = (x) => {
   return (
@@ -32,10 +26,14 @@ const isValidTubeResponse: TypeGuard = (x) => {
 
 const makeTubeFromStatusResponse = (resp: TubeStatusResponse) => {
   if (isValidTubeResponse(resp)) {
+      const raw_status =resp["lineStatuses"][0]; 
     return {
       name: resp["name"],
       id: resp["id"],
-      status: resp["lineStatuses"][0]["statusSeverityDescription"],
+      status: {
+          description: raw_status["statusSeverityDescription"],
+          reason: raw_status["reason"]
+      },
     } as Tube;
   }
   throw Error("Failed to convert invalid type");
@@ -45,6 +43,7 @@ export const useFetchAllTubeData: () => [Tube[], boolean] = () => {
   let tubes: Tube[] = [];
   const [{ data, loading }] = useTFLAPI("/Line/Mode/tube/Status");
   if (data !== undefined) {
+      console.log(data);
     tubes = data.map(makeTubeFromStatusResponse);
   }
   return [tubes, loading];
