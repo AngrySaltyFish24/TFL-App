@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
-import useAxios from "axios-hooks";
+
+import { useFetchAllTubeData, Tube, useFetchTubeDataById } from "./services";
 
 import {
   TableContainer,
@@ -11,85 +12,12 @@ import {
   TableRow,
 } from "@mui/material";
 
-type Tube = {
-  name: string;
-  id: string;
-  status: string;
-};
-
-type TubeStatusResponse = {
-  name: string;
-  id: string;
-  lineStatuses: {
-    statusSeverityDescription: string;
-  }[];
-};
-
-type Predicate<T> = (x: T) => boolean;
-type TypeGuard = Predicate<unknown>;
-
-const isValidTubeResponse: TypeGuard = (x) => {
-  return (
-    typeof x === "object" &&
-    x !== null &&
-    "name" in x &&
-    "id" in x &&
-    "lineStatuses" in x
-  );
-};
-
-const makeTubeFromStatusResponse = (resp: TubeStatusResponse) => {
-  if (isValidTubeResponse(resp)) {
-    return {
-      name: resp["name"],
-      id: resp["id"],
-      status: resp["lineStatuses"][0]["statusSeverityDescription"],
-    } as Tube;
-  }
-  throw Error("Failed to convert invalid type");
-};
-
-const useFetchAllTubeData: () => [Tube[], boolean] = () => {
-  let tubes: Tube[] = [];
-  const [{ data, loading }] = useAxios(
-    "https://api.tfl.gov.uk/Line/Mode/tube/Status",
-  );
-  if (data !== undefined) {
-    tubes = data.map(makeTubeFromStatusResponse);
-  }
-  return [tubes, loading];
-};
-
-const useFetchTubeData: (id: string | null) => [null | Tube, boolean] = (
-  id: string | null,
-) => {
-  let [tube, setTube] = useState<null | Tube>(null);
-  const [{ loading }, execute] = useAxios(
-    `https://api.tfl.gov.uk/Line/${id}/Status`,
-    { manual: true },
-  );
-
-  const fetch = async () => {
-    const data = await execute();
-    if (data !== undefined) {
-      setTube(makeTubeFromStatusResponse(data.data[0]));
-    }
-  };
-
-  useEffect(() => {
-    if (id !== null) {
-      fetch();
-    }
-  }, [id]);
-  return [tube, loading];
-};
-
 const useTubeData: () => [Tube[], (id: string) => Promise<void>] = () => {
   const [data, setData] = useState<Tube[]>([]);
   const [id, setId] = useState<string | null>(null);
   const [tubes, loading] = useFetchAllTubeData();
 
-  const [updatedTube, updateLoading] = useFetchTubeData(id);
+  const [updatedTube, updateLoading] = useFetchTubeDataById(id);
 
   useEffect(() => {
     setData(tubes);

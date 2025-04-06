@@ -2,7 +2,7 @@ import React, { act } from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import App from "./App";
 
-import axios from "axios";
+import { TFLAxios } from "./services";
 import AxiosMockAdapter from "axios-mock-adapter";
 
 const mock_data = [
@@ -43,7 +43,7 @@ const mock_data = [
 ];
 
 const setupMocks = () => {
-  const mock = new AxiosMockAdapter(axios);
+  const mock = new AxiosMockAdapter(TFLAxios);
 
   mock
     .onGet("https://api.tfl.gov.uk/Line/Mode/tube/Status")
