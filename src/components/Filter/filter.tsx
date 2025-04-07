@@ -24,11 +24,11 @@ const useFilters = (
   return onFilterChange;
 };
 
-type FilterProps = {
+type FilterPanelProps = {
   tubeData: Tube[];
   setFilteredTubeData: SetState<Tube[]>;
 };
-const FilterPanel = ({ tubeData, setFilteredTubeData }: FilterProps) => {
+const FilterPanel = ({ tubeData, setFilteredTubeData }: FilterPanelProps) => {
   const descriptions = [
     ...new Set(tubeData.map((item) => item.status.description)),
   ];
@@ -39,6 +39,7 @@ const FilterPanel = ({ tubeData, setFilteredTubeData }: FilterProps) => {
   const onFilterChange = useFilters(
     tubeData,
     setFilteredTubeData,
+    // Why a function?
     getCheckboxFilters(),
   );
 
@@ -48,7 +49,6 @@ const FilterPanel = ({ tubeData, setFilteredTubeData }: FilterProps) => {
         checkboxState={checkboxState}
         updateCheckboxState={updateCheckboxState}
         onCheckboxChange={onFilterChange}
-        checkboxKey={"DescriptionFilterCheckboxes"}
       />
     </FormGroup>
   );

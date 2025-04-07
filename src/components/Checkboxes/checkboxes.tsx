@@ -66,7 +66,6 @@ type CheckboxProps = {
   checkboxState: CheckboxState;
   updateCheckboxState: (name: string, value: boolean) => void;
   onCheckboxChange: () => void;
-  checkboxKey: string;
 };
 const Checkboxes = ({ checkboxState, updateCheckboxState }: CheckboxProps) => {
   return (
