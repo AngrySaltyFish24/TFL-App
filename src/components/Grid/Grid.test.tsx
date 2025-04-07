@@ -4,70 +4,7 @@ import Grid from "./Grid";
 
 import { makeTestTubeData } from "testing";
 
-import { TFLAxios } from "services";
-import AxiosMockAdapter from "axios-mock-adapter";
-
-const mock_data = [
-  {
-    id: "bakerloo",
-    name: "Bakerloo",
-    created: "2025-03-31T10:36:12.297Z",
-    modified: "2025-03-31T10:36:12.297Z",
-    lineStatuses: [
-      {
-        $type:
-          "Tfl.Api.Presentation.Entities.LineStatus, Tfl.Api.Presentation.Entities",
-        id: 0,
-        statusSeverity: 10,
-        statusSeverityDescription: "Good Service",
-        created: "0001-01-01T00:00:00",
-        validityPeriods: [],
-      },
-    ],
-  },
-  {
-    id: "central",
-    name: "Central",
-    created: "2025-03-31T10:36:12.28Z",
-    modified: "2025-03-31T10:36:12.28Z",
-    lineStatuses: [
-      {
-        $type:
-          "Tfl.Api.Presentation.Entities.LineStatus, Tfl.Api.Presentation.Entities",
-        id: 0,
-        statusSeverity: 10,
-        statusSeverityDescription: "Good Service",
-        created: "0001-01-01T00:00:00",
-        validityPeriods: [],
-      },
-    ],
-  },
-];
-
-const setupMocks = () => {
-  const mock = new AxiosMockAdapter(TFLAxios);
-
-  mock
-    .onGet("https://api.tfl.gov.uk/Line/Mode/tube/Status")
-    .replyOnce(200, mock_data);
-
-  mock.onGet("https://api.tfl.gov.uk/Line/bakerloo/Status").replyOnce(200, [
-    {
-      ...mock_data[0],
-      lineStatuses: [{ statusSeverityDescription: "Bad Service" }],
-    },
-  ]);
-};
-
-beforeEach(() => {
-  setupMocks();
-});
-
-afterEach(() => {
-  jest.clearAllMocks();
-});
-
-const renderApp = async () => {
+const renderGrid = async () => {
   render(<Grid tubeData={makeTestTubeData()}></Grid>);
   await waitFor(() => {
     expect(screen.getByText("Bakerloo"));
@@ -75,8 +12,8 @@ const renderApp = async () => {
 };
 
 test("All rows are rendered", async () => {
-  await renderApp();
-  for (const obj of mock_data) {
+  await renderGrid();
+  for (const obj of makeTestTubeData()) {
     expect(screen.getByText(obj.name));
   }
 });
@@ -94,7 +31,7 @@ test("All rows are rendered", async () => {
 // });
 
 test("Rows can expand with more information", async () => {
-  await renderApp();
+  await renderGrid();
   const button = screen.queryAllByLabelText("expand row")[0];
   fireEvent.click(button);
   await waitFor(() => {

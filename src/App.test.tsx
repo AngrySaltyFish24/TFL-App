@@ -14,7 +14,6 @@ const setupMocks = () => {
   mock
     .onGet("https://api.tfl.gov.uk/Line/Mode/tube/Status")
     .replyOnce(200, mock_data);
-
 };
 
 beforeEach(() => {
@@ -36,12 +35,11 @@ test("Data is filtered", () => {
   const firstRowName = makeTestTubeData()[0].name;
 
   waitFor(() => {
-      expect(screen.getByText(firstRowName)).toBeInTheDocument();
+    expect(screen.getByText(firstRowName)).toBeInTheDocument();
     for (const checkbox of checkboxes) {
       expect(checkbox).toBeChecked();
       fireEvent.click(checkbox);
       expect(screen.getByText(firstRowName)).not.toBeInTheDocument();
     }
-
   });
 });

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Table from "@mui/material/Table";
 
 import Collapse from "@mui/material/Collapse";
@@ -25,7 +25,6 @@ const Row = ({ tube }: RowProps) => {
   return (
     <>
       <TableRow
-        key={tube.id}
         hover={true}
         onClick={() => {
           setOpen(!open);
@@ -68,8 +67,7 @@ const Row = ({ tube }: RowProps) => {
 type GridProps = {
   tubeData: Tube[];
 };
-// TODO: Names this TubeStatusGrid
-export const Grid = ({ tubeData }: GridProps) => {
+export const TubeStatusGrid = ({ tubeData }: GridProps) => {
   return (
     <TableContainer component={Paper} sx={{ margin: 1 }}>
       <Table>
@@ -82,7 +80,7 @@ export const Grid = ({ tubeData }: GridProps) => {
         </TableHead>
         <TableBody>
           {tubeData.map((data) => (
-            <Row tube={data}></Row>
+            <Row key={data.id} tube={data}></Row>
           ))}
         </TableBody>
       </Table>
@@ -90,4 +88,4 @@ export const Grid = ({ tubeData }: GridProps) => {
   );
 };
 
-export default Grid;
+export default TubeStatusGrid;
