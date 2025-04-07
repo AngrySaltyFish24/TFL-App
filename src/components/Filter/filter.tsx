@@ -1,12 +1,8 @@
 import FormGroup from "@mui/material/FormGroup";
-import {
-  useEffect,
-  useCallback,
-} from "react";
+import { useEffect, useCallback } from "react";
 
 import { Predicate, Tube, SetState } from "types";
-import Checkboxes, {useCheckboxes} from "components/Checkboxes";
-
+import Checkboxes, { useCheckboxes } from "components/Checkboxes";
 
 const useFilters = (
   tubeData: Tube[],

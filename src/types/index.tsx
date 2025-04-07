@@ -14,4 +14,4 @@ export type Tube = {
   status: Status;
 };
 
-export type SetState<T> = Dispatch<SetStateAction<T>>
+export type SetState<T> = Dispatch<SetStateAction<T>>;

@@ -33,11 +33,7 @@ const Row = ({ tube }: RowProps) => {
         }}
       >
         <TableCell>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={toggleOpen}
-          >
+          <IconButton aria-label="expand row" size="small" onClick={toggleOpen}>
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>

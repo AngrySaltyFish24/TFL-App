@@ -2,10 +2,7 @@ import { Predicate, Tube } from "types";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
-import {
-  useCallback,
-  useMemo,
-} from "react";
+import { useCallback, useMemo } from "react";
 
 import { useState } from "react";
 const makeFilterFunc = (name: string) => {

@@ -1,6 +1,4 @@
 import Checkboxes, { useCheckboxes } from "./checkboxes";
 
-export {
-    useCheckboxes
-}
+export { useCheckboxes };
 export default Checkboxes;

@@ -11,19 +11,21 @@ function App() {
   const [tubeData, loading] = useFetchAllTubeData();
   const [filteredTubeData, setFilteredTubeData] = useState<Tube[]>([]);
 
-  return (loading ? (
-      <Grid container spacing={2}>
-        <Grid size="grow">
-          <TubeStatusTable tubeData={filteredTubeData} />
-        </Grid>
-        <Grid size={3}>
-          <FilterPanel
-            tubeData={tubeData}
-            setFilteredTubeData={setFilteredTubeData}
-          />
-        </Grid>
+  return loading ? (
+    <Grid container spacing={2}>
+      <Grid size="grow">
+        <TubeStatusTable tubeData={filteredTubeData} />
       </Grid>
-    ) : <> </>);
+      <Grid size={3}>
+        <FilterPanel
+          tubeData={tubeData}
+          setFilteredTubeData={setFilteredTubeData}
+        />
+      </Grid>
+    </Grid>
+  ) : (
+    <> </>
+  );
 }
 
 export default App;
