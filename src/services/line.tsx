@@ -45,5 +45,6 @@ export const useFetchAllTubeData: () => [Tube[], boolean] = () => {
   if (data !== undefined) {
     tubes = data.map(makeTubeFromStatusResponse);
   }
-  return [tubes, loading];
+  const ready = !loading && tubes.length > 1;
+  return [tubes, ready];
 };

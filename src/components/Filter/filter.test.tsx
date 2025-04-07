@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { render, screen } from "@testing-library/react";
 
-import Filter from "./filter";
+import FilterPanel from "./filter";
 
 import { makeTestTubeData } from "testing";
 
@@ -9,7 +9,7 @@ const renderFilter = () => {
   const DummyComponent = () => {
     const [data, setData] = useState(makeTestTubeData());
 
-    return <Filter tubeData={data} setFilteredTubeData={setData} />;
+    return <FilterPanel tubeData={data} setFilteredTubeData={setData} />;
   };
 
   render(<DummyComponent />);

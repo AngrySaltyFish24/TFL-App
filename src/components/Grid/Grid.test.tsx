@@ -1,11 +1,10 @@
-import React, { act } from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import Grid from "./Grid";
+import TubeStatusTable from "./Grid";
 
 import { makeTestTubeData } from "testing";
 
 const renderGrid = async () => {
-  render(<Grid tubeData={makeTestTubeData()}></Grid>);
+  render(<TubeStatusTable tubeData={makeTestTubeData()}></TubeStatusTable>);
   await waitFor(() => {
     expect(screen.getByText("Bakerloo"));
   });
@@ -17,18 +16,6 @@ test("All rows are rendered", async () => {
     expect(screen.getByText(obj.name));
   }
 });
-
-// test("Service is updated on click", async () => {
-//   await renderApp();
-//   expect(screen.queryByText("Bad Service")).not.toBeInTheDocument();
-//
-//   const row = screen.getByText("Bakerloo");
-//   fireEvent.click(row);
-//
-//   await waitFor(() => {
-//     expect(screen.queryByText("Bad Service")).toBeInTheDocument();
-//   });
-// });
 
 test("Rows can expand with more information", async () => {
   await renderGrid();

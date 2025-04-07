@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export type Predicate<T> = (x: T) => boolean;
 export type TypeGuard = Predicate<unknown>;
 
@@ -11,3 +13,5 @@ export type Tube = {
   id: string;
   status: Status;
 };
+
+export type SetState<T> = Dispatch<SetStateAction<T>>

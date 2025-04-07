@@ -1,2 +1,2 @@
-import Grid from "./Grid";
-export default Grid;
+import TubeStatusTable from "./Grid";
+export default TubeStatusTable;

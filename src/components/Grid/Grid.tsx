@@ -22,13 +22,12 @@ type RowProps = {
 };
 const Row = ({ tube }: RowProps) => {
   const [open, setOpen] = useState(false);
+  const toggleOpen = () => setOpen(!open);
   return (
     <>
       <TableRow
         hover={true}
-        onClick={() => {
-          setOpen(!open);
-        }}
+        onClick={toggleOpen}
         sx={{
           cursor: "pointer",
         }}
@@ -37,7 +36,7 @@ const Row = ({ tube }: RowProps) => {
           <IconButton
             aria-label="expand row"
             size="small"
-            onClick={() => setOpen(!open)}
+            onClick={toggleOpen}
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
@@ -67,7 +66,7 @@ const Row = ({ tube }: RowProps) => {
 type GridProps = {
   tubeData: Tube[];
 };
-export const TubeStatusGrid = ({ tubeData }: GridProps) => {
+export const TubeStatusTable = ({ tubeData }: GridProps) => {
   return (
     <TableContainer component={Paper} sx={{ margin: 1 }}>
       <Table>
@@ -88,4 +87,4 @@ export const TubeStatusGrid = ({ tubeData }: GridProps) => {
   );
 };
 
-export default TubeStatusGrid;
+export default TubeStatusTable;
