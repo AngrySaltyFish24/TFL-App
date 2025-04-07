@@ -40,7 +40,7 @@ const FilterPanel = ({ tubeData, setFilteredTubeData }: FilterPanelProps) => {
     tubeData,
     setFilteredTubeData,
     // Why a function?
-    getCheckboxFilters(),
+    getCheckboxFilters,
   );
 
   return (

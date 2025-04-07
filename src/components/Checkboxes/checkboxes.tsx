@@ -20,7 +20,7 @@ export const useCheckboxes = (
   names: string[],
 ): [
   CheckboxState,
-  () => Predicate<Tube>[],
+   Predicate<Tube>[],
   (name: string, value: boolean) => void,
 ] => {
   const defaultCheckboxes: CheckboxState = useMemo(() => {
@@ -51,14 +51,11 @@ export const useCheckboxes = (
     });
   }, []);
 
-  const currentActiveFilters = () => {
-    const activeCheckboxFilters = names
+    const currentActiveFilters = names
       .map((name) => checkboxes[name])
       .filter((checkboxStatus) => checkboxStatus["checked"])
       .map((checkbox) => checkbox["filterFunc"]);
 
-    return activeCheckboxFilters;
-  };
 
   return [checkboxes, currentActiveFilters, updateCheckboxState];
 };
