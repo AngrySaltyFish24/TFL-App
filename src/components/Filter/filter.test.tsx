@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { render, screen } from "@testing-library/react";
 
 import FilterPanel from "./filter";
 
+import { render, screen } from "@testing-library/react";
 import { makeTestTubeData } from "testing";
 
 const renderFilter = () => {

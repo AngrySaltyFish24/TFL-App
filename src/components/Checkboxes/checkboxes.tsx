@@ -1,10 +1,10 @@
-import { Predicate, Tube } from "types";
+import { useCallback, useMemo, useState } from "react";
+
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
-import { useCallback, useMemo } from "react";
+import { Predicate, Tube } from "types";
 
-import { useState } from "react";
 const makeFilterFunc = (name: string) => {
   return (tube: Tube) => tube.status.description === name;
 };
@@ -20,7 +20,7 @@ export const useCheckboxes = (
   names: string[],
 ): [
   CheckboxState,
-   Predicate<Tube>[],
+  Predicate<Tube>[],
   (name: string, value: boolean) => void,
 ] => {
   const defaultCheckboxes: CheckboxState = useMemo(() => {
@@ -51,11 +51,10 @@ export const useCheckboxes = (
     });
   }, []);
 
-    const currentActiveFilters = names
-      .map((name) => checkboxes[name])
-      .filter((checkboxStatus) => checkboxStatus["checked"])
-      .map((checkbox) => checkbox["filterFunc"]);
-
+  const currentActiveFilters = names
+    .map((name) => checkboxes[name])
+    .filter((checkboxStatus) => checkboxStatus["checked"])
+    .map((checkbox) => checkbox["filterFunc"]);
 
   return [checkboxes, currentActiveFilters, updateCheckboxState];
 };

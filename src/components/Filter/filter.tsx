@@ -1,5 +1,6 @@
-import FormGroup from "@mui/material/FormGroup";
 import { useEffect, useCallback } from "react";
+
+import FormGroup from "@mui/material/FormGroup";
 
 import { Predicate, Tube, SetState } from "types";
 import Checkboxes, { useCheckboxes } from "components/Checkboxes";
@@ -39,7 +40,6 @@ const FilterPanel = ({ tubeData, setFilteredTubeData }: FilterPanelProps) => {
   const onFilterChange = useFilters(
     tubeData,
     setFilteredTubeData,
-    // Why a function?
     getCheckboxFilters,
   );
 

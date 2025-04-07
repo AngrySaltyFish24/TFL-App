@@ -1,10 +1,7 @@
 import { useState } from "react";
+
 import Table from "@mui/material/Table";
-
 import Collapse from "@mui/material/Collapse";
-
-import { Tube } from "types";
-
 import TableContainer from "@mui/material/TableContainer";
 import {
   TableHead,
@@ -14,8 +11,11 @@ import {
   TableRow,
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import IconButton from "@mui/material/IconButton";
+
+import { Tube } from "types";
 
 type RowProps = {
   tube: Tube;
