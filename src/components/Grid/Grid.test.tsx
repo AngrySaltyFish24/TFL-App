@@ -6,8 +6,9 @@ import { makeTestTubeData } from "testing";
 
 const renderGrid = async () => {
   render(<TubeStatusTable tubeData={makeTestTubeData()}></TubeStatusTable>);
+  const firstRowName = makeTestTubeData()[0].name;
   await waitFor(() => {
-    expect(screen.getByText("Bakerloo"));
+    expect(screen.getByText(firstRowName));
   });
 };
 

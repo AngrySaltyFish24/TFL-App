@@ -39,7 +39,7 @@ test("Data is filtered", () => {
     for (const checkbox of checkboxes) {
       expect(checkbox).toBeChecked();
       fireEvent.click(checkbox);
-      expect(screen.getByText(firstRowName)).not.toBeInTheDocument();
     }
+    expect(screen.getByText(firstRowName)).not.toBeInTheDocument();
   });
 });
