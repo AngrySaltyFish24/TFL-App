@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, FC } from "react";
 
 import FormGroup from "@mui/material/FormGroup";
 
@@ -25,6 +25,10 @@ const useFilters = (
   return onFilterChange;
 };
 
+type FilterComponentProp = {
+  onChange: () => void;
+};
+
 type FilterPanelProps = {
   tubeData: Tube[];
   setFilteredTubeData: SetState<Tube[]>;
@@ -37,20 +41,47 @@ const FilterPanel = ({ tubeData, setFilteredTubeData }: FilterPanelProps) => {
   const [checkboxState, getCheckboxFilters, updateCheckboxState] =
     useCheckboxes(descriptions);
 
-  const onFilterChange = useFilters(
-    tubeData,
-    setFilteredTubeData,
-    getCheckboxFilters,
-  );
+  const CheckBoxFilterComponent = ({
+    onChange: onChange,
+  }: FilterComponentProp) => {
+    return (
+      <Checkboxes
+        key={"Checkbox"}
+        checkboxState={checkboxState}
+        updateCheckboxState={updateCheckboxState}
+        onCheckboxChange={onChange}
+      />
+    );
+  };
 
   return (
     <FormGroup>
-      <Checkboxes
-        checkboxState={checkboxState}
-        updateCheckboxState={updateCheckboxState}
-        onCheckboxChange={onFilterChange}
+      <FilterController
+        filterComponents={[CheckBoxFilterComponent]}
+        filters={getCheckboxFilters}
+        tubeData={tubeData}
+        setFilteredData={setFilteredTubeData}
       />
     </FormGroup>
+  );
+};
+
+type FilterControllerProps = {
+  tubeData: Tube[];
+  filters: Predicate<Tube>[];
+  setFilteredData: SetState<Tube[]>;
+  filterComponents: FC<FilterComponentProp>[];
+};
+const FilterController = ({
+  tubeData,
+  filters,
+  setFilteredData,
+  filterComponents,
+}: FilterControllerProps) => {
+  const onFilterChange = useFilters(tubeData, setFilteredData, filters);
+
+  return (
+    <>{filterComponents.map((comp) => comp({ onChange: onFilterChange }))}</>
   );
 };
 
