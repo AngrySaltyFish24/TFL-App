@@ -1,4 +1,4 @@
-import TubeStatusTable from "components/Grid";
+import TubeStatusTable from "components/TubeStatusTable";
 import FilterPanel from "components/Filter";
 import Grid from "@mui/material/Grid";
 import { useState } from "react";

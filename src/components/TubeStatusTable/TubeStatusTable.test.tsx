@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 
-import TubeStatusTable from "./Grid";
+import TubeStatusTable from "./TubeStatusTable";
 
 import { makeTestTubeData } from "testing";
 
